@@ -7,4 +7,3 @@ class UserModel(AbstractModel):
 
     def token_is_valid(self, token):
         return self.data["token"] == token
-# first commit
