@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request
 from src.models.language_model import LanguageModel
+from src.models.history_model import HistoryModel
 from deep_translator import GoogleTranslator
 
 
@@ -27,6 +28,14 @@ def translate():
     translated = GoogleTranslator(
         source=translate_from, target=translate_to
         ).translate(text_to_translate)
+
+    history = {
+        "text_to_translate": text_to_translate,
+        "translate_from": translate_from,
+        "translate_to": translate_to,
+        "translated": translated
+    }
+    HistoryModel(history).save()
 
     return render_template(
             "index.html",
